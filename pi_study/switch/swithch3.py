@@ -1,6 +1,21 @@
 import RPi.GPIO as gpio
 from time import sleep
 
+gpio.setmode(gpio.BCM)
+class Led:
+    def __init__(self, pin, color):
+        self.pin = pin
+        self.color = color
+        gpio.setup(pin, gpio.OUT)
+        gpio.setup(pin, gpio.LOW)
+
+    def blink(self, pin, color):
+        for _ in range(count):
+            gpio.output(self.pin, gpio.HIGH)
+            sleep(time)
+            gpio.output(self.pin, gpio.LOW)
+            sleep(time)
+
 class Button:
     def _init_(self, pin, setOnPressed):
         self.pin = pin
@@ -18,12 +33,22 @@ class Button:
     def checkPressed(self, currentState):
         return currentState == gpio.HIGH and self.prevState == gpio.LOW
     
-    def open():
-        print("문을 연다.")
-    def close():
-        print("문을 닫는다.")
-    
-buttons = (Button(13, open), Button(19, close))
+    def ledRedfunction():
+        leds[0].blink(10, 0.5)
+
+        greenLedState = False
+
+    def ledGreenFunction():
+        global greenLedState
+        if greenLedState:
+           leds[1].ledOff()
+        else:
+            leds[1].ledOff()
+        greenLedState = not greenLedState
+
+leds = (Led(16, "RED"), Led(21, "GREEN"))
+
+buttons = (Button(13, ledRedfunction), Button(19, ledGreenFunction))
 
 try:
     while True:
